@@ -98,4 +98,4 @@ function resetToCurPosition(position) {
 let curButton = document.querySelector("#btn-current");
 curButton.addEventListener("click", onButtonClickHandler);
 
-updateInfo("Paris");
+updateInfo("Kiev");
