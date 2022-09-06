@@ -1,7 +1,7 @@
 // Current date
 
 function getDateTime(date) {
-  let weekDay = date.getDay();
+  let weekDay = new Date(date).getDay();
   const weekDays = [
     "Sunday",
     "Monday",
@@ -11,11 +11,11 @@ function getDateTime(date) {
     "Friday",
     "Saturday",
   ];
-  let hour = date.getHours();
+  let hour = new Date(date).getHours();
   if (hour < 10) {
     hour = `0${hour}`;
   }
-  let minutes = date.getMinutes();
+  let minutes = new Date(date).getMinutes();
   if (minutes < 10) {
     minutes = `0${minutes}`;
   }
@@ -24,7 +24,7 @@ function getDateTime(date) {
 }
 
 function getMonthYear(date) {
-  let month = date.getMonth();
+  let month = new Date(date).getMonth();
   const months = [
     "January",
     "February",
@@ -39,17 +39,17 @@ function getMonthYear(date) {
     "November",
     "December",
   ];
-  let day = date.getDate();
-  let year = date.getFullYear();
+  let day = new Date(date).getDate();
+  let year = new Date(date).getFullYear();
 
   return `${months[month]} ${day}, ${year}`;
 }
-let curranteDate = new Date();
-let dateTime = document.querySelector("#current-weekday-time");
-dateTime.innerHTML = getDateTime(curranteDate);
+// let curranteDate = new Date();
+// let dateTime = document.querySelector("#current-weekday-time");
+// dateTime.innerHTML = getDateTime(curranteDate);
 
-let monthYear = document.querySelector("#current-month-year");
-monthYear.innerHTML = getMonthYear(curranteDate);
+// let monthYear = document.querySelector("#current-month-year");
+// monthYear.innerHTML = getMonthYear(curranteDate);
 
 // City name
 function eventHandler(e) {
@@ -69,7 +69,11 @@ function updateInfo(city) {
   axios.get(apiUrl).then(changeContent);
 }
 function changeContent(response) {
+  let date = response.data.dt * 1000;
   document.querySelector("#current-city").innerHTML = response.data.name;
+  document.querySelector("#current-weekday-time").innerHTML = getDateTime(date);
+  console.log(response);
+  document.querySelector("#current-month-year").innerHTML = getMonthYear(date);
   document.querySelector("#current-temp").innerHTML = Math.round(
     response.data.main.temp
   );
@@ -98,4 +102,4 @@ function resetToCurPosition(position) {
 let curButton = document.querySelector("#btn-current");
 curButton.addEventListener("click", onButtonClickHandler);
 
-updateInfo("Kiev");
+updateInfo("Kyiv");

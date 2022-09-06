@@ -20,69 +20,70 @@
     <link rel="stylesheet" href="src/styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
-  <body onload="updateInfo()">
-    <div class="primary-conteiner">
-      <div class="container-xxl main">
-        <form id="search-form">
-          <div class="row justify-content-sm-center">
-            <div class="col-lg-6">
-              <input
-                type="text"
-                class="form-control input-city"
-                placeholder="Enter the city"
-                id="search-input"
-              />
-            </div>
-            <div class="col-auto">
-              <button type="submit" class="btn btn-primary">Search</button>
-              <button type="button" class="btn btn-secondary" id="btn-current">
-                Current
-              </button>
-            </div>
+  <body>
+    <div class="container-xxl main">
+      <form id="search-form">
+        <div class="row justify-content-sm-center">
+          <div class="col-lg-6">
+            <input
+              type="text"
+              class="form-control input-city"
+              placeholder="Enter the city"
+              id="search-input"
+            />
           </div>
-        </form>
-        <hr />
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="button" class="btn btn-secondary" id="btn-current">
+              Current
+            </button>
+          </div>
+        </div>
+      </form>
+      <hr />
 
-        <section>
-          <div class="row justify-content-lg-center">
-            <div class="col-lg-6 col-sm-8">
-              <h2 id="current-city"></h2>
-              <h3 id="current-weekday-time">Wednesday 11:27</h3>
-              <h3 id="current-month-year">August 10, 2022</h3>
-              <div class="row align-items-center">
-                <div class="col-auto flex-nowrap img-thermometer">
-                  <img
-                    class="thermometer"
-                    src="images/SVG/42650thermometer_99061.svg"
-                    alt="thermometer"
-                  />
-                </div>
-                <div class="col-auto temperature">
-                  <span id="current-temp"></span>
-                  <span class="units">
-                    <a href="#" class="scale C" id="cel-link">°C</a>
-                  </span>
-                </div>
+      <section>
+        <div class="row justify-content-lg-center">
+          <div class="col-lg-6 col-sm-8">
+            <h2 id="current-city"></h2>
+            <h3 id="current-weekday-time">Wednesday 11:27</h3>
+            <h3 id="current-month-year">August 10, 2022</h3>
+            <div class="row align-items-center">
+              <div class="col-auto flex-nowrap img-thermometer">
+                <img
+                  class="thermometer"
+                  src="images/SVG/42650thermometer_99061.svg"
+                  alt="thermometer"
+                />
+              </div>
+              <div class="col-auto temperature">
+                <span id="current-temp"></span>
+                <span class="units">
+                  <a href="#" class="scale C" id="cel-link">°C</a> |
+                  <a href="#" class="scale F" id="far-link">°F</a>
+                </span>
               </div>
             </div>
-            <div class="col-lg-6 col-sm-4 main-contant-right">
-              <ul class="rigth-list">
-                <li class="extra-info">
-                  Humidity: <span id="humidity"></span>
-                </li>
-                <li class="extra-info">Wind: <span id="wind"></span> km/h</li>
-                <li class="extra-info" id="description"></li>
-              </ul>
-            </div>
           </div>
-        </section>
-      </div>
-      <small class="footer">
+          <div class="col-lg-4 col-sm-4 main-contant-right">
+            <img
+              src="images/SVG/cloudy_weather_icon_152005.svg"
+              alt="cloudy_weather_icon"
+            />
+            <ul class="rigth-list">
+              <li class="extra-info">Humidity: <span id="humidity"></span></li>
+              <li class="extra-info">Wind: <span id="wind"></span> km/h</li>
+              <li class="extra-info" id="description"></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <div class="footer">
         <a href="https://github.com/OlyaBukina/weather-app" target="_blank"
           >Open-source code</a
         >
         by Olha Bukina
-      </small>
+      </div>
     </div>
     <script src="src/script.js"></script>
   </body>
