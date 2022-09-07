@@ -75,7 +75,7 @@ h2 {
   font-size: 42px;
   font-weight: 700;
   line-height: 1.5;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .units {
   font-size: 20px;
@@ -85,9 +85,11 @@ h2 {
 }
 
 h3 {
-  font-size: 28px;
-  line-height: 1.3;
+  font-size: 26px;
+  line-height: 1.5;
   margin-bottom: 0;
+  color: #00155f9d;
+  font-weight: 400;
 }
 .thermometer {
   height: 96px;
@@ -112,6 +114,7 @@ h3 {
 .rigth-list {
   list-style: none;
   padding-left: 0;
+  color: #00155f9d;
 }
 
 .extra-info {
