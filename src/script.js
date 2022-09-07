@@ -74,18 +74,30 @@ function changeContent(response) {
   document.querySelector("#current-weekday-time").innerHTML = getDateTime(date);
   console.log(response);
   document.querySelector("#current-month-year").innerHTML = getMonthYear(date);
-  document.querySelector("#current-temp").innerHTML = Math.round(
-    response.data.main.temp
-  );
+
+  celsiusTemperature = response.data.main.temp;
+
+  document.querySelector("#current-temp").innerHTML =
+    Math.round(celsiusTemperature);
+  document
+    .querySelector("#icon")
+    .setAttribute(
+      "src",
+      `images/Weather_icons/${response.data.weather[0].icon}.svg`
+    );
+  document
+    .querySelector("#icon")
+    .setAttribute("alt", `${response.data.weather[0].description} icon`);
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
   document.querySelector("#wind").innerHTML = Math.round(
     response.data.wind.speed
   );
   document.querySelector("#description").innerHTML =
     response.data.weather[0].main;
+  console.log(response.data.weather[0].icon);
 }
 
-// Bonus point
+// Current city
 function onButtonClickHandler() {
   navigator.geolocation.getCurrentPosition(resetToCurPosition);
 }
@@ -101,5 +113,27 @@ function resetToCurPosition(position) {
 
 let curButton = document.querySelector("#btn-current");
 curButton.addEventListener("click", onButtonClickHandler);
+
+let celsiusTemperature = null;
+
+function displayFahrenheitTemp(event) {
+  event.preventDefault();
+  celsiusLink.classList.remove("active");
+  fahrenheitLink.classList.add("active");
+  let fahrTemp = Math.round((celsiusTemperature * 9) / 5 + 32);
+  document.querySelector("#current-temp").innerHTML = fahrTemp;
+}
+let fahrenheitLink = document.querySelector("#fahrenheit-link");
+fahrenheitLink.addEventListener("click", displayFahrenheitTemp);
+
+function displaycelsiusTemp(event) {
+  event.preventDefault();
+  fahrenheitLink.classList.remove("active");
+  celsiusLink.classList.add("active");
+  document.querySelector("#current-temp").innerHTML =
+    Math.round(celsiusTemperature);
+}
+let celsiusLink = document.querySelector("#celsius-link");
+celsiusLink.addEventListener("click", displaycelsiusTemp);
 
 updateInfo("Kyiv");
