@@ -116,7 +116,10 @@ h3 {
   padding-left: 0;
   color: #00155f9d;
 }
-
+.weather-icon {
+  margin-bottom: 20px;
+  width: 150px;
+}
 .extra-info {
   font-size: 20px;
   font-weight: 400;

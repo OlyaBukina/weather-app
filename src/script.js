@@ -83,7 +83,7 @@ function changeContent(response) {
     .querySelector("#icon")
     .setAttribute(
       "src",
-      `images/Weather_icons/${response.data.weather[0].icon}.svg`
+      `images/Weather_icons_NEW/${response.data.weather[0].icon}.svg`
     );
   document
     .querySelector("#icon")
