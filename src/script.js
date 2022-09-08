@@ -137,36 +137,72 @@ celsiusLink.addEventListener("click", displaycelsiusTemp);
 
 updateInfo("Kyiv");
 
+// Cards in the footer
+function formatWeekDay(timestamp) {
+  let day = new Date(timestamp * 1000).getDay();
+  const weekDays = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  return weekDays[day];
+}
+
+function formatData(timestamp) {
+  let day = new Date(timestamp * 1000).getDate();
+  let month = new Date(timestamp * 1000).getMonth();
+  let year = new Date(timestamp * 1000).getFullYear();
+
+  if (day < 10) {
+    day = `0${day}`;
+  }
+
+  return `${month}/${day}/${year}`;
+}
 function displeyForecast(response) {
-  console.log(response.data.daily);
+  let forecast = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
+
   let forecastHTML = `<div class="row row-cols-2 row-cols-lg-5 g-2 g-md-4 text-center">`;
-  const weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"];
-  weekDays.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `<div class="col">
+
+  forecast.forEach(function (forecastDay, index) {
+    if (index >= 1 && index < 6) {
+      forecastHTML =
+        forecastHTML +
+        `<div class="col">
         <div class="card">
           <img
             class="weather-forecast-icon"
-            src="images/Weather_icons_NEW/03d.svg"
-            alt="clouds"
+            src="images/Weather_icons_NEW/${forecastDay.weather[0].icon}.svg"
+            alt="${forecastDay.weather[0].description}"
             />
             <div class="weather-forecast-temperatures">
-              <span class="weather-forecast-temperature-max">24°</span>
-              <span class="weather-forecast-temperature-min">20°</span>
+              <span class="weather-forecast-temperature-max">${Math.round(
+                forecastDay.temp.max
+              )}°</span>
+              <span class="weather-forecast-temperature-min">${Math.round(
+                forecastDay.temp.min
+              )}°</span>
             </div>
-            <div class="weather-forcast-day">${day}</div>
-            <div class="weather-forcast-date">08/11/2022</div>
+            <div class="weather-forcast-day">${formatWeekDay(
+              forecastDay.dt
+            )}</div>
+            <div class="weather-forcast-date">${formatData(
+              forecastDay.dt
+            )}</div>
         </div>
       </div>`;
+    }
   });
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
 }
 
 function getForecast(coordinates) {
-  console.log(coordinates);
   let apiKey = `a43564c91a6c605aeb564c9ed02e3858`;
   let apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then(displeyForecast);
