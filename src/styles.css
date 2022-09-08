@@ -35,9 +35,11 @@ body {
   padding: 10px 30px;
   transition: all 200ms ease-in-out;
 }
-.btn-primary:hover {
-  /* color: rgb(30, 75, 158); */
-  background-color: rgb(114, 163, 253);
+.btn-primary:hover,
+.btn-primary:focus {
+  color: rgb(255 255 255);
+  background-color: rgb(68 107 212);
+  box-shadow: 0px 0px 15px rgba(30, 75, 158, 0.8);
 }
 .btn-secondary {
   color: rgb(30, 75, 158);
@@ -51,6 +53,12 @@ body {
   border-radius: 25px;
   padding: 10px 30px;
   transition: all 200ms ease-in-out;
+}
+.btn-secondary:hover,
+.btn-secondary:focus {
+  color: rgb(30, 75, 158);
+  background-color: rgb(247, 210, 79);
+  box-shadow: 0px 0px 15px rgba(30, 75, 158, 0.8);
 }
 .temperature {
   font-weight: 500;
@@ -118,24 +126,11 @@ h3 {
   font-weight: 400;
   line-height: 1.5;
 }
-.scale {
-  color: #00155f9d;
-}
-.temperature .active {
-  color: #00155f;
-  cursor: default;
-}
-.temperature .active:hover {
-  text-decoration: none;
-}
+
 .footer {
   text-align: left;
   padding-top: 20px;
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
-}
-
-a {
-  text-decoration: none;
 }

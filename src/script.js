@@ -44,17 +44,12 @@ function getMonthYear(date) {
 
   return `${months[month]} ${day}, ${year}`;
 }
-// let curranteDate = new Date();
-// let dateTime = document.querySelector("#current-weekday-time");
-// dateTime.innerHTML = getDateTime(curranteDate);
-
-// let monthYear = document.querySelector("#current-month-year");
-// monthYear.innerHTML = getMonthYear(curranteDate);
 
 // City name
 function eventHandler(e) {
   e.preventDefault();
   let city = document.querySelector("#search-input").value;
+  e.target.reset();
   return updateInfo(city);
 }
 
@@ -112,28 +107,6 @@ function resetToCurPosition(position) {
 
 let curButton = document.querySelector("#btn-current");
 curButton.addEventListener("click", onButtonClickHandler);
-
-let celsiusTemperature = null;
-
-function displayFahrenheitTemp(event) {
-  event.preventDefault();
-  celsiusLink.classList.remove("active");
-  fahrenheitLink.classList.add("active");
-  let fahrTemp = Math.round((celsiusTemperature * 9) / 5 + 32);
-  document.querySelector("#current-temp").innerHTML = fahrTemp;
-}
-let fahrenheitLink = document.querySelector("#fahrenheit-link");
-fahrenheitLink.addEventListener("click", displayFahrenheitTemp);
-
-function displaycelsiusTemp(event) {
-  event.preventDefault();
-  fahrenheitLink.classList.remove("active");
-  celsiusLink.classList.add("active");
-  document.querySelector("#current-temp").innerHTML =
-    Math.round(celsiusTemperature);
-}
-let celsiusLink = document.querySelector("#celsius-link");
-celsiusLink.addEventListener("click", displaycelsiusTemp);
 
 updateInfo("Kyiv");
 
