@@ -1,7 +1,6 @@
 // Current date
-
-function getDateTime(date) {
-  let weekDay = new Date(date).getDay();
+function formatWeekDay(timestamp) {
+  const day = new Date(timestamp * 1000).getDay();
   const weekDays = [
     "Sunday",
     "Monday",
@@ -11,20 +10,26 @@ function getDateTime(date) {
     "Friday",
     "Saturday",
   ];
-  let hour = new Date(date).getHours();
+  return weekDays[day];
+}
+
+function getDateTime(timestamp) {
+  const date = new Date(timestamp * 1000);
+  let hour = date.getHours();
   if (hour < 10) {
     hour = `0${hour}`;
   }
-  let minutes = new Date(date).getMinutes();
+  let minutes = date.getMinutes();
   if (minutes < 10) {
     minutes = `0${minutes}`;
   }
 
-  return `${weekDays[weekDay]} ${hour}:${minutes}`;
+  return `${formatWeekDay(timestamp)} ${hour}:${minutes}`;
 }
 
-function getMonthYear(date) {
-  let month = new Date(date).getMonth();
+function getMonthYear(timestamp) {
+  const date = new Date(timestamp * 1000);
+  const month = date.getMonth();
   const months = [
     "January",
     "February",
@@ -39,8 +44,8 @@ function getMonthYear(date) {
     "November",
     "December",
   ];
-  let day = new Date(date).getDate();
-  let year = new Date(date).getFullYear();
+  const day = date.getDate();
+  const year = date.getFullYear();
 
   return `${months[month]} ${day}, ${year}`;
 }
@@ -64,7 +69,7 @@ function updateInfo(city) {
   axios.get(apiUrl).then(changeContent);
 }
 function changeContent(response) {
-  let date = response.data.dt * 1000;
+  const date = response.data.dt;
   document.querySelector("#current-city").innerHTML = response.data.name;
   document.querySelector("#current-weekday-time").innerHTML = getDateTime(date);
   document.querySelector("#current-month-year").innerHTML = getMonthYear(date);
@@ -111,24 +116,12 @@ curButton.addEventListener("click", onButtonClickHandler);
 updateInfo("Kyiv");
 
 // Cards in the footer
-function formatWeekDay(timestamp) {
-  let day = new Date(timestamp * 1000).getDay();
-  const weekDays = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  return weekDays[day];
-}
 
-function formatData(timestamp) {
-  let day = new Date(timestamp * 1000).getDate();
-  let month = new Date(timestamp * 1000).getMonth();
-  let year = new Date(timestamp * 1000).getFullYear();
+function formatDate(timestamp) {
+  const date = new Date(timestamp * 1000);
+  let day = date.getDate();
+  const month = date.getMonth();
+  const year = date.getFullYear();
 
   if (day < 10) {
     day = `0${day}`;
@@ -136,47 +129,46 @@ function formatData(timestamp) {
 
   return `${month}/${day}/${year}`;
 }
-function displeyForecast(response) {
-  let forecast = response.data.daily;
+function displayForecast(response) {
+  const forecast = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
 
-  let forecastHTML = `<div class="row row-cols-2 row-cols-lg-5 g-2 g-md-4 text-center">`;
+  let forecastHTML = "";
 
   forecast.forEach(function (forecastDay, index) {
     if (index >= 1 && index < 6) {
-      forecastHTML =
-        forecastHTML +
-        `<div class="col">
-        <div class="card">
-          <img
-            class="weather-forecast-icon"
-            src="images/Weather_icons_NEW/${forecastDay.weather[0].icon}.svg"
-            alt="${forecastDay.weather[0].description}"
-            />
-            <div class="weather-forecast-temperatures">
-              <span class="weather-forecast-temperature-max">${Math.round(
-                forecastDay.temp.max
-              )}°</span>
-              <span class="weather-forecast-temperature-min">${Math.round(
-                forecastDay.temp.min
-              )}°</span>
-            </div>
-            <div class="weather-forcast-day">${formatWeekDay(
-              forecastDay.dt
-            )}</div>
-            <div class="weather-forcast-date">${formatData(
-              forecastDay.dt
-            )}</div>
-        </div>
-      </div>`;
+      forecastHTML += `
+        <div class="col">
+          <div class="card">
+            <img
+              class="weather-forecast-icon"
+              src="images/Weather_icons_NEW/${forecastDay.weather[0].icon}.svg"
+              alt="${forecastDay.weather[0].description}"
+              />
+              <div class="weather-forecast-temperatures">
+                <span class="weather-forecast-temperature-max">${Math.round(
+                  forecastDay.temp.max
+                )}°</span>
+                <span class="weather-forecast-temperature-min">${Math.round(
+                  forecastDay.temp.min
+                )}°</span>
+              </div>
+              <div class="weather-forcast-day">${formatWeekDay(
+                forecastDay.dt
+              )}</div>
+              <div class="weather-forcast-date">${formatDate(
+                forecastDay.dt
+              )}</div>
+          </div>
+        </div>`;
     }
   });
-  forecastHTML = forecastHTML + `</div>`;
+
   forecastElement.innerHTML = forecastHTML;
 }
 
 function getForecast(coordinates) {
-  let apiKey = `a43564c91a6c605aeb564c9ed02e3858`;
+  const apiKey = `a43564c91a6c605aeb564c9ed02e3858`;
   let apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
-  axios.get(apiUrl).then(displeyForecast);
+  axios.get(apiUrl).then(displayForecast);
 }
