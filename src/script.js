@@ -137,3 +137,31 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displaycelsiusTemp);
 
 updateInfo("Kyiv");
+
+function displeyForecast() {
+  let forecastElement = document.querySelector("#forecast");
+  let forecastHTML = `<div class="row row-cols-2 row-cols-lg-5 g-2 g-md-4 text-center">`;
+  const weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"];
+  weekDays.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `<div class="col">
+        <div class="card">
+          <img
+            class="weather-forecast-icon"
+            src="images/Weather_icons_NEW/03d.svg"
+            alt="clouds"
+            />
+            <div class="weather-forecast-temperatures">
+              <span class="weather-forecast-temperature-max">24°</span>
+              <span class="weather-forecast-temperature-min">20°</span>
+            </div>
+            <div class="weather-forcast-day">${day}</div>
+            <div class="weather-forcast-date">08/11/2022</div>
+        </div>
+      </div>`;
+  });
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
+displeyForecast();
