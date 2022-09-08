@@ -72,7 +72,6 @@ function changeContent(response) {
   let date = response.data.dt * 1000;
   document.querySelector("#current-city").innerHTML = response.data.name;
   document.querySelector("#current-weekday-time").innerHTML = getDateTime(date);
-  console.log(response);
   document.querySelector("#current-month-year").innerHTML = getMonthYear(date);
 
   celsiusTemperature = response.data.main.temp;
@@ -94,7 +93,7 @@ function changeContent(response) {
   );
   document.querySelector("#description").innerHTML =
     response.data.weather[0].main;
-  console.log(response.data.weather[0].icon);
+  getForecast(response.data.coord);
 }
 
 // Current city
@@ -138,7 +137,8 @@ celsiusLink.addEventListener("click", displaycelsiusTemp);
 
 updateInfo("Kyiv");
 
-function displeyForecast() {
+function displeyForecast(response) {
+  console.log(response.data.daily);
   let forecastElement = document.querySelector("#forecast");
   let forecastHTML = `<div class="row row-cols-2 row-cols-lg-5 g-2 g-md-4 text-center">`;
   const weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"];
@@ -164,4 +164,10 @@ function displeyForecast() {
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
 }
-displeyForecast();
+
+function getForecast(coordinates) {
+  console.log(coordinates);
+  let apiKey = `a43564c91a6c605aeb564c9ed02e3858`;
+  let apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displeyForecast);
+}
