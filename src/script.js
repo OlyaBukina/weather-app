@@ -1,3 +1,19 @@
+// Preloader
+let mask = document.querySelector("#mask");
+function hideMask() {
+  mask.classList.add(".hide");
+  setTimeout(() => {
+    mask.remove();
+  }, 600);
+}
+
+// function showMask() {
+//   mask.classList.add(".hide");
+//   setTimeout(() => {
+//     mask.remove();
+//   }, 500);
+// }
+window.addEventListener("load", hideMask);
 // Current date
 function formatWeekDay(timestamp) {
   const day = new Date(timestamp * 1000).getDay();
