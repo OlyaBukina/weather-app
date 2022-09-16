@@ -1,19 +1,13 @@
 // Preloader
-let mask = document.querySelector("#mask");
-function hideMask() {
-  mask.classList.add(".hide");
-  setTimeout(() => {
-    mask.remove();
-  }, 600);
-}
+// let mask = document.querySelector("#mask");
+// function hideMask() {
+//   mask.classList.add("hide");
+// }
 
 // function showMask() {
-//   mask.classList.add(".hide");
-//   setTimeout(() => {
-//     mask.remove();
-//   }, 500);
+//   mask.classList.remove("hide");
 // }
-window.addEventListener("load", hideMask);
+// window.addEventListener("load", hideMask);
 // Current date
 function formatWeekDay(timestamp) {
   const day = new Date(timestamp * 1000).getDay();
@@ -70,6 +64,7 @@ function getMonthYear(timestamp) {
 function eventHandler(e) {
   e.preventDefault();
   let city = document.querySelector("#search-input").value;
+  console.log(city)
   e.target.reset();
   return updateInfo(city);
 }
@@ -113,19 +108,20 @@ function changeContent(response) {
 }
 
 // Current city
-function onButtonClickHandler() {
-  navigator.geolocation.getCurrentPosition(resetToCurPosition);
-}
 function resetToCurPosition(position) {
+  showMask()
   let curLat = position.coords.latitude;
   let curLon = position.coords.longitude;
   const apiKey = "5dbca037f9f2d02bb53f691a0a9ec0f7";
-
+  
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${curLat}&lon=${curLon}&appid=${apiKey}&units=metric`;
-
+  
   axios.get(apiUrl).then(changeContent);
 }
 
+function onButtonClickHandler() {
+  navigator.geolocation.getCurrentPosition(resetToCurPosition);
+}
 let curButton = document.querySelector("#btn-current");
 curButton.addEventListener("click", onButtonClickHandler);
 
@@ -186,5 +182,7 @@ function displayForecast(response) {
 function getForecast(coordinates) {
   const apiKey = `a43564c91a6c605aeb564c9ed02e3858`;
   let apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  // console.log(axios.get(apiUrl));
+  
   axios.get(apiUrl).then(displayForecast);
 }
